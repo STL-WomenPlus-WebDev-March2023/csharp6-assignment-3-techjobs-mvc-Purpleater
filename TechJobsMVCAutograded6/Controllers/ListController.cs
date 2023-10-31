@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -44,6 +45,19 @@ public class ListController : Controller
     // TODO #2 - Complete the Jobs action method
     public IActionResult Jobs(string column, string value)
     {
+
+        List<string> jobs = new List<string>();
+
+        if (column == "All" && value == "View All")
+        {
+            ViewBag.jobs = JobData.FindAll();
+            ViewBag.title = "All Jobs";
+        }
+        else
+        {
+            ViewBag.title = $"View Criteria: {value}";
+            ViewBag.jobs = JobData.FindByColumnAndValue(column, value);
+        }
         return View();
     }
 }
